@@ -1,0 +1,16 @@
+- name: Change hostname
+  ansible.builtin.hostname:
+    name: "{{inventory_hostname}}"
+
+- name: Install base packages
+  ansible.builtin.apt:
+    name:
+      - net-tools
+      - dnsutils
+      - wget
+      - curl
+      - mc
+      - rsync
+    state: present
+    update_cache: yes
+    lock_timeout: 300

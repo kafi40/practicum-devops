@@ -1,0 +1,13 @@
+- name: Install Nginx
+  ansible.builtin.apt:
+    name:
+      - nginx
+    state: present
+    update_cache: yes
+
+- name: Configure Nginx backend page
+  ansible.builtin.copy:
+    dest: /var/www/html/index.html
+    content: "Hello from {{ inventory_hostname }}!"
+    mode: "0644"
+

@@ -1,0 +1,12 @@
+upstream backend_pool {
+    server {{ hostvars['vm-2']['ansible_host'] }}:80;
+    server {{ hostvars['vm-3']['ansible_host'] }}:80;
+}
+
+
+server {
+    listen 3000;
+    location / {
+        proxy_pass http://backend_pool;
+    }
+}

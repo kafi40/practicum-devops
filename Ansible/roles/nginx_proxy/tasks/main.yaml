@@ -1,0 +1,25 @@
+- name: Install Nginx
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Configure Nginx as reverse proxy
+  ansible.builtin.copy:
+    scr: proxy.conf.j2
+    dest: /etc/nginx/sites-available/proxy.conf
+    mode: "0644"
+
+- name: Enable proxy config
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/proxy.conf
+    dest: /etc/nginx/sites-enabled/proxy.conf
+    state: link
+    force: yes
+
+- name: Restart Nginx
+  ansible.builtin.systemd:
+    name: nginx
+    state: restarted
+    enabled: yes
+
